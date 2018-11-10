@@ -5,13 +5,13 @@
 %   Optimized For Matlab        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%== get initial wall time: (format long:ÏÔÊ¾15Î»Ë«¾«¶È)
+%== get initial wall time: (format long:æ˜¾ç¤º15ä½åŒç²¾åº¦)
 time0=clock();
 format long;
 
 %-- Simulation cell parameters:
-Nx=300;     %x¸ñµãÊı
-Ny=300;     %y¸ñµãÊı
+Nx=300;     %xæ ¼ç‚¹æ•°
+Ny=300;     %yæ ¼ç‚¹æ•°
 NxNy=Nx*Ny;
 
 dx=0.03;    %grid spacing between two grid points in the x-direction
@@ -25,16 +25,16 @@ dtime=1.e-4;    % Time increment for numerical integration
 
 %-- Material specific parameters:
 
-tau=0.0003;      % ¦Ó
-epsilonb=0.01;   % ¦Å°Î
-mu=1.0;          % ¦Ì
-kappa=1.8;       % ¦Ê
-delta=0.02;      % ¦Ä
+tau=0.0003;      % Ï„
+epsilonb=0.01;   % Îµæ‹”
+mu=1.0;          % Î¼
+kappa=1.8;       % Îº
+delta=0.02;      % Î´
 aniso=6.0;       % j
-alpha=0.9;       % ¦Á
-gamma=10.0;      % ¦Ã
+alpha=0.9;       % Î±
+gamma=10.0;      % Î³
 teq=1.0;         % Teq
-theta0=0.2;      % ¦È0
+theta0=0.2;      % Î¸0
 seed=5.0;        % The size of the initial seed (In grid numbers) 
                  % See function nucleus
 pix=4.0*atan(1.0);  % The value of pi
@@ -53,47 +53,47 @@ pix=4.0*atan(1.0);  % The value of pi
 
 for istep=1:nstep
     
-    phiold=phi; %Ê×ÏÈ¶¨ÒåÁËphi_oldºÍphiÊÇÏàµÈµÄ
+    phiold=phi; %é¦–å…ˆå®šä¹‰äº†phi_oldå’Œphiæ˜¯ç›¸ç­‰çš„
     
     %--
     % calculate the laplacians and epsilon:
     %--
     
-    phi2=reshape(phi',NxNy,1); %½«phi(Nx,Ny)×ª»»³ÉÒ»Î¬Êı×éphi2(Nx*Ny)£¬phi'ÎªphiµÄ×ªÖÃ£¬Ö»
-                               %Ö»ÓĞ×ªÖÃºó²ÅÄÜÕıÈ·µØ°´ÕÕµÚÒ»ĞĞ¡¢µÚ¶şĞĞµÄË³Ğò½øĞĞreshape
-    lap_phi2=laplacian*phi2;   %¼ÆËãphi2µÄÀ­ÆÕÀ­Ë¹Öµ£¬?2¦Õ
+    phi2=reshape(phi',NxNy,1); %å°†phi(Nx,Ny)è½¬æ¢æˆä¸€ç»´æ•°ç»„phi2(Nx*Ny)ï¼Œphi'ä¸ºphiçš„è½¬ç½®ï¼Œåª
+                               %åªæœ‰è½¬ç½®åæ‰èƒ½æ­£ç¡®åœ°æŒ‰ç…§ç¬¬ä¸€è¡Œã€ç¬¬äºŒè¡Œçš„é¡ºåºè¿›è¡Œreshape
+    lap_phi2=laplacian*phi2;   %è®¡ç®—phi2çš„æ‹‰æ™®æ‹‰æ–¯å€¼ï¼Œ?2Ï†
     
-    [lap_phi]=vec2matx(lap_phi2,Nx);    %½«lap_phi2(Nx*Ny£©×ª»¯µ½¶şÎ¬¾ØÕólap_phi(Nx,Ny)
+    [lap_phi]=vec2matx(lap_phi2,Nx);    %å°†lap_phi2(Nx*Nyï¼‰è½¬åŒ–åˆ°äºŒç»´çŸ©é˜µlap_phi(Nx,Ny)
     
     %--
     
-    tempx=reshape(tempr',NxNy,1); %½«tempr(Nx,Ny)×ª»»ÎªÒ»Î¬Êı×étempx(NxNy)
+    tempx=reshape(tempr',NxNy,1); %å°†tempr(Nx,Ny)è½¬æ¢ä¸ºä¸€ç»´æ•°ç»„tempx(NxNy)
     
-    lap_tempx=laplacian*tempx; %¼ÆËã?2T
+    lap_tempx=laplacian*tempx; %è®¡ç®—?2T
     
-    [lap_tempr]=vec2matx(lap_tempx,Nx); %½«lap_tempx(Nx*Ny)×ª»»Îª¶şÎ¬¾ØÕólap_tempr(Nx,Ny)
+    [lap_tempr]=vec2matx(lap_tempx,Nx); %å°†lap_tempx(Nx*Ny)è½¬æ¢ä¸ºäºŒç»´çŸ©é˜µlap_tempr(Nx,Ny)
     
     %--gradients of phi:
     
-    [phidy,phidx]=gradient_mat(phi,Nx,Ny,dx,dy); %¼ÆËãCartesian derivatives of phi,?¦Õ
-    %Ò»Î¬·½ÏòÉÏµÄÌİ¶È£¬µ«¼ÓÉÏÁË±ß½çÌõ¼şÒÔ¼°¿¼ÂÇÁËdxºÍdy
+    [phidy,phidx]=gradient_mat(phi,Nx,Ny,dx,dy); %è®¡ç®—Cartesian derivatives of phi,?Ï†
+    %ä¸€ç»´æ–¹å‘ä¸Šçš„æ¢¯åº¦ï¼Œä½†åŠ ä¸Šäº†è¾¹ç•Œæ¡ä»¶ä»¥åŠè€ƒè™‘äº†dxå’Œdy
     %calculate angle:
     
-    theta=atan2(phidy,phidx); %calculate theta:¦È=tan-1(¦Õy/¦Õx)
-    %ÕâÀïµÄatan2ÊÇ¶¨ÒåÔÚ(-¦Ğ,¦Ğ)ÉÏµÄ£¬ÕâÀïµÄthetaÊÇÒ»¸öÊı×é
+    theta=atan2(phidy,phidx); %calculate theta:Î¸=tan-1(Ï†y/Ï†x)
+    %è¿™é‡Œçš„atan2æ˜¯å®šä¹‰åœ¨(-Ï€,Ï€)ä¸Šçš„ï¼Œè¿™é‡Œçš„thetaæ˜¯ä¸€ä¸ªæ•°ç»„
     %--epsilon and its derivative:
     
-    epsilon=epsilonb*(1.0+delta*cos(aniso*(theta-theta0))); %calculate ¦Å,ËüÊÇÒ»¸öÊı×é
+    epsilon=epsilonb*(1.0+delta*cos(aniso*(theta-theta0))); %calculate Îµ,å®ƒæ˜¯ä¸€ä¸ªæ•°ç»„
     
     epsilon_deriv=-epsilonb*aniso*delta*sin(aniso.*(theta-theta0));
-    %calculate ?¦Å/?¦È  .*Ö¸µÄÊÇÁ½¸ö¾ØÕóµÄ¶ÔÓ¦ÔªËØÏà³Ë£¬aij*bij,¶ø²»ÊÇ¾ØÕó³Ë·¨£¬ËüÊÇÒ»¸öÊı×é
-    %--- first term of Eq.4.51 ¼ÆËãµÚÒ»Ïî
+    %calculate ?Îµ/?Î¸  .*æŒ‡çš„æ˜¯ä¸¤ä¸ªçŸ©é˜µçš„å¯¹åº”å…ƒç´ ç›¸ä¹˜ï¼Œaij*bij,è€Œä¸æ˜¯çŸ©é˜µä¹˜æ³•ï¼Œå®ƒæ˜¯ä¸€ä¸ªæ•°ç»„
+    %--- first term of Eq.4.51 è®¡ç®—ç¬¬ä¸€é¡¹
     
     dummyx=epsilon.*epsilon_deriv.*phidx;
     
     [term1,dummy]=gradient_mat(dummyx,Nx,Ny,dx,dy);
     
-    %--- second term of Eq.4.51 ¼ÆËãµÚ¶şÏî
+    %--- second term of Eq.4.51 è®¡ç®—ç¬¬äºŒé¡¹
     
     dummyy=-epsilon.*epsilon_deriv.*phidy;
     
